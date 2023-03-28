@@ -6,6 +6,6 @@ public class UserData {
     public static final String EMAIL_VALID = "";
     public static final String PASSWORD_VALID = "";
 
-    public static final String EMAIL_INVALIDE = "";
-    public static final String PASSWORD_INVALIDE = "";
+    public static final String EMAIL_INVALIDE = "ss@mail.ru";
+    public static final String PASSWORD_INVALIDE = "dd";
 }

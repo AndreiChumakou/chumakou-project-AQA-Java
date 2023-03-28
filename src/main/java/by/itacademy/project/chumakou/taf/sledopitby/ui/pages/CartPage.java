@@ -1,10 +1,23 @@
 package by.itacademy.project.chumakou.taf.sledopitby.ui.pages;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class CartPage {
 
-    public static final String FIRST_PRODUCT_NAME_IN_CART = "//tbody/tr/td[@class='name']";
+    WebDriver driver;
 
+    public CartPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.driver = driver;
+    }
+
+    @FindBy(xpath = "//tbody/tr/td[@class='name']")
+    private WebElement firstProductnameInCart;
+
+    public String getFirstProductNameInCart() {
+        return firstProductnameInCart.getText();
+    }
 }
-

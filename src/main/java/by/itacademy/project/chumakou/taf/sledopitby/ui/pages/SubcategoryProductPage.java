@@ -5,19 +5,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class AccountPage {
+public class SubcategoryProductPage extends HomePage{
 
     public WebDriver driver;
 
-    public AccountPage(WebDriver driver) {
+    public SubcategoryProductPage(WebDriver driver) {
+        super(driver);
         PageFactory.initElements(driver,this);
         this.driver = driver;
     }
 
-    @FindBy(xpath = "//img[@alt='Account Details']")
-    private WebElement accountEditLink;
+    @FindBy(xpath = "//a[@itemprop='name url']")
+    private WebElement first_product_name;
 
-    public void goToAccountEditPage() {
-        accountEditLink.click();
+    public String productGetNameBeforeAddingToCart() {
+        return first_product_name.getText();
     }
 }
