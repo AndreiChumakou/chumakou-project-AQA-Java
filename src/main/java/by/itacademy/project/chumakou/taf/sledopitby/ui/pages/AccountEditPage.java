@@ -5,19 +5,19 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class AccountPage {
+public class AccountEditPage {
 
     public WebDriver driver;
 
-    public AccountPage(WebDriver driver) {
+    public AccountEditPage(WebDriver driver) {
         PageFactory.initElements(driver,this);
         this.driver = driver;
     }
 
-    @FindBy(xpath = "//img[@alt='Account Details']")
-    private WebElement accountEditLink;
+    @FindBy(name = "firstname")
+    private WebElement actualAccountName;
 
-    public void goToAccountEditPage() {
-        accountEditLink.click();
+    public String getActualNameFromAccount() {
+        return actualAccountName.getAttribute("value");
     }
 }

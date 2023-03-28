@@ -1,110 +1,65 @@
 package by.itacademy.project.chumakou.taf.sledopitby.ui.steps;
 
 import by.itacademy.project.chumakou.taf.sledopitby.ui.pages.*;
-import org.openqa.selenium.By;
+import by.itacademy.project.chumakou.taf.sledopitby.ui.users.UserData;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class Steps {
 
     WebDriver driver;
+    LoginPage loginPage;
+    HomePage homePage;
 
-    public Steps(WebDriver driver) {
+    public Steps(WebDriver driver, HomePage homePage, LoginPage loginPage) {
         this.driver = driver;
+        this.homePage = homePage;
+        this.loginPage = loginPage;
     }
 
-    public void goToLoginPage() {
-        driver.findElement(By.linkText(HomePage.LOGIN_PAGE_ENTER_LINK_TITLE)).click();
+    public void login(String email, String password, boolean isValidCredentials) {
+        homePage.goToLoginPageLink();
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
+        loginPage.submitButtonEnterToAccount();
+        if (isValidCredentials) {
+            new AccountPage(driver).goToAccountEditPage();
+        }
     }
 
-    public void logout() {
-        driver.findElement(By.linkText(HomePage.LOGOUT_LINK_TITLE)).click();
+    public boolean logout() {
+        homePage.goToHomePage();
+        loginPage.logout();
+        return new LogoutPage(driver).confirmLogout();
     }
 
-    public void enterEmail(String email) {
-        driver.findElement(By.name(LoginPage.EMAIL_FIELD_NAME_IN_HTML))
-                .sendKeys(email);
+    public boolean addProductToCartCheck() {
+        homePage.openCategoryGoods();
+        SubcategoryProductPage subcategoryProductPage = homePage.openSubcategoryProductsPage();
+        String productName = subcategoryProductPage.productGetNameBeforeAddingToCart();
+        subcategoryProductPage.addFirstProductToCart();
+        String addedProductName = subcategoryProductPage.goToCartPageAfterAddingProduct().getFirstProductNameInCart();
+        return productName.equals(addedProductName);
     }
 
-    public void enterPassword(String password) {
-        driver.findElement(By.name(LoginPage.PASSWORD_FIELD_NAME_IN_HTML))
-                .sendKeys(password);
+    public boolean addProductToCartAndRemove() {
+        addProductToCartCheck();
+        homePage.goToHomePage();
+        homePage.removeProductFromCart();
+        return homePage.isCartEmpty();
     }
 
-    public void submitButtonEnterToAccount() {
-        driver.findElement(By.xpath(LoginPage.BUTTON_ENTER_TO_ACCOUNT)).click();
+    public boolean saveProductInCartWhenLogout() {
+        login(UserData.EMAIL_VALID, UserData.PASSWORD_VALID, true);
+        homePage.searchProduct();
+        homePage.addFirstProductToCart();
+        String productInCart = homePage.goToCartPageAfterAddingProduct().getFirstProductNameInCart();
+        homePage.goToHomePage();
+        loginPage.logout();
+        homePage.goToHomePage();
+        login(UserData.EMAIL_VALID, UserData.PASSWORD_VALID, true);
+        homePage.goToHomePage();
+        String productInCartAfterRelogin = homePage.goToCartPage().getFirstProductNameInCart();
+        return productInCart.equals(productInCartAfterRelogin);
     }
 
-    public void enterCredentialsGoToAccount(String email, String password) {
-        goToLoginPage();
-        enterEmail(email);
-        enterPassword(password);
-        submitButtonEnterToAccount();
-    }
-
-    public String getWarningInvalidCredentials() {
-        return driver.findElement(By.xpath(LoginPage.WARNING_INVALIDE_CREDENTIALS_XPATH))
-                .getText();
-    }
-
-    public void goToAccountEditPage() {
-        driver.findElement(By.xpath(AccountPage.ACCOUNT_EDIT_LINK)).click();
-    }
-
-    public String getActualNameFromAccount() {
-        return driver.findElement(By.name("firstname")).getAttribute("value");
-    }
-
-    public void openCategoryGoods(String category) {
-        driver.findElement(By.linkText(category)).click();
-    }
-
-    public void openSubcategoryProducts(String subcategory) {
-        driver.findElement(By.linkText(subcategory)).click();
-    }
-
-    public String getFirstProductNameBeforeAddingToCart() {
-        return driver.findElement(By.xpath(HomePage.FIRST_PRODUCT_NAME)).getText();
-    }
-
-    public String productGetNameBeforeAddingToCart(String category, String subcategory) {
-        openCategoryGoods(category);
-        openSubcategoryProducts(subcategory);
-        return getFirstProductNameBeforeAddingToCart();
-    }
-
-    public void addFirstProductToCart() {
-        driver.findElement(By.xpath(HomePage.ADD_TO_CART_BUTTON)).click();
-    }
-
-    public void goToCartPage() {
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(ExpectedConditions
-                .stalenessOf(driver.findElement(By.linkText(HomePage.CART_PAGE_ENTER_LINK_TITLE))));
-        driver.findElement(By.linkText(HomePage.CART_PAGE_ENTER_LINK_TITLE)).click();
-    }
-
-    public String getFirstProductNameInCart() {
-        return driver.findElement(By.xpath(CartPage.FIRST_PRODUCT_NAME_IN_CART)).getText();
-    }
-
-    public String productGetNameAfterAddingToCart() {
-        addFirstProductToCart();
-        goToCartPage();
-        return getFirstProductNameInCart();
-    }
-
-    public void goToHomePage() {
-        driver.findElement(By.className("header-logo")).click();
-    }
-
-    public void removeProductFromCart() {
-        driver.findElement(By.xpath(HomePage.REMOVE_PRODUCT_FROM_CART_PATH)).click();
-    }
-
-    public boolean confirmLogout() {
-        return driver.findElement(By.xpath(LogoutPage.LOGOUT_CONFIRMATION_PATH)).isDisplayed();
-    }
 }
