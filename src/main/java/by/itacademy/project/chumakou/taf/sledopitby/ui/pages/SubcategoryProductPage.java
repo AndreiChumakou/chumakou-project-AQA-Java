@@ -5,20 +5,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class SubcategoryProductPage extends HomePage{
-
-    public WebDriver driver;
+public class SubcategoryProductPage extends HomePage {
 
     public SubcategoryProductPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
         this.driver = driver;
     }
 
     @FindBy(xpath = "//a[@itemprop='name url']")
-    private WebElement first_product_name;
+    private WebElement firstProductName;
 
     public String productGetNameBeforeAddingToCart() {
-        return first_product_name.getText();
+        return firstProductName.getText();
     }
 }

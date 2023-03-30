@@ -10,9 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class HomePage {
-
-    public WebDriver driver;
+public class HomePage extends BasePage{
 
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -22,8 +20,6 @@ public class HomePage {
     public static final String URL = "https://www.sledopit.by";
     public static final String TITLE_MAIN_PAGE = "Следопыт ®- охотничий магазин в Минске." +
             " Снаряжение для охоты, рыбалки и активного туризма с доставкой по Беларуси";
-
-    public static final String PRODUCT_FOR_SEARCH = "Палатка";
 
     @FindBy(linkText = "Вход")
     private WebElement loginPageEnterLinkTitle;
@@ -83,14 +79,14 @@ public class HomePage {
         removeProductFromCartXPath.click();
     }
 
-    public void searchProduct() {
+    public void searchProduct(String product) {
         searchBar.click();
-        searchBar.sendKeys(PRODUCT_FOR_SEARCH);
+        searchBar.sendKeys(product);
         searchButton.click();
     }
 
-    public String searchProductResult() {
-        searchProduct();
+    public String searchProductResult(String product) {
+        searchProduct(product);
         return searchResult.getText().toLowerCase();
     }
 

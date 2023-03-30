@@ -5,9 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage {
-
-    public WebDriver driver;
+public class LoginPage extends BasePage{
 
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -31,19 +29,22 @@ public class LoginPage {
     @FindBy(linkText = "Выход")
     private WebElement logoutLinkTitle;
 
-    public void enterEmail(String email) {
+    public LoginPage enterEmail(String email) {
         emailField.sendKeys(email);
+        return this;
     }
 
-    public void enterPassword(String password) {
+    public LoginPage enterPassword(String password) {
         passwordField.sendKeys(password);
+        return this;
     }
 
-    public void submitButtonEnterToAccount() {
+    public LoginPage submitButtonEnterToAccount() {
         buttonEnterToAccount.click();
+        return this;
     }
 
-    public String getWarningInvalidCredentials() {
+    public String getWarningInvalidCredentialsText() {
         return warningInvalidCredentialsXPath.getText();
     }
 
