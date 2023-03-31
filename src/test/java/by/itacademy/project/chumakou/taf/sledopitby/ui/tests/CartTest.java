@@ -1,27 +1,11 @@
 package by.itacademy.project.chumakou.taf.sledopitby.ui.tests;
 
-import by.itacademy.project.chumakou.taf.sledopitby.ui.driver.Driver;
-import by.itacademy.project.chumakou.taf.sledopitby.ui.pages.HomePage;
-import by.itacademy.project.chumakou.taf.sledopitby.ui.pages.LoginPage;
-import by.itacademy.project.chumakou.taf.sledopitby.ui.steps.Steps;
+import by.itacademy.project.chumakou.taf.sledopitby.ui.steps.CartSteps;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
 
-public class CartTest {
+public class CartTest extends BaseTest{
 
-    WebDriver driver = Driver.getDriver();
-    Steps step;
-
-    public static HomePage homePage;
-    public static LoginPage loginPage;
-
-    @BeforeEach
-    public void warmUp() {
-        driver.get(HomePage.URL);
-        homePage = new HomePage(driver);
-        loginPage = new LoginPage(driver);
-        step = new Steps(driver, homePage, loginPage);
-    }
+    CartSteps step = new CartSteps(driver, homePage, loginPage);
 
     @Test
     @DisplayName("Open site with empty cart")
@@ -35,14 +19,15 @@ public class CartTest {
         Assertions.assertTrue(step.addProductToCartCheck());
     }
 
+    @Test
+    @DisplayName("Storing products in a cart")
+    public void saveProductInCartWhenLogout() {
+        Assertions.assertTrue(step.saveProductInCartWhenLogout());
+    }
+
     @Test()
     @DisplayName("Remove product from cart")
     public void removeFromCart() {
         Assertions.assertTrue(step.addProductToCartAndRemove());
-    }
-
-    @AfterEach
-    public void tearDown() {
-        driver.quit();
     }
 }
