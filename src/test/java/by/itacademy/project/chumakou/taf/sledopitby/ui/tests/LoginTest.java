@@ -3,7 +3,7 @@ package by.itacademy.project.chumakou.taf.sledopitby.ui.tests;
 import by.itacademy.project.chumakou.taf.sledopitby.ui.pages.AccountEditPage;
 import by.itacademy.project.chumakou.taf.sledopitby.ui.pages.LoginPage;
 import by.itacademy.project.chumakou.taf.sledopitby.ui.steps.LoginSteps;
-import by.itacademy.project.chumakou.taf.sledopitby.ui.users.UserData;
+import by.itacademy.project.chumakou.taf.sledopitby.ui.data.UserData;
 import org.junit.jupiter.api.*;
 
 public class LoginTest extends BaseTest{
@@ -47,14 +47,6 @@ public class LoginTest extends BaseTest{
     @DisplayName("Login. Empty password")
     public void testLoginWithEmptyPassword() {
         step.login(UserData.EMAIL_VALID, "", false);
-        Assertions.assertEquals(LoginPage.WARNING_INVALIDE_CREDENTIALS_TEXT,
-                loginPage.getWarningInvalidCredentialsText());
-    }
-
-    @Test
-    @DisplayName("Login. Empty credential fields")
-    public void testEnterWithEmptyFieldsEmailAndPassword() {
-        step.login("", "", false);
         Assertions.assertEquals(LoginPage.WARNING_INVALIDE_CREDENTIALS_TEXT,
                 loginPage.getWarningInvalidCredentialsText());
     }

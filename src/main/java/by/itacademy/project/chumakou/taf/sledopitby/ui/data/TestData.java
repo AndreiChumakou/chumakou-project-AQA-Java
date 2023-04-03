@@ -1,4 +1,4 @@
-package by.itacademy.project.chumakou.taf.sledopitby.ui.users;
+package by.itacademy.project.chumakou.taf.sledopitby.ui.data;
 
 public class TestData {
 

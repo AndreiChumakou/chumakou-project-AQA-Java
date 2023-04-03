@@ -1,6 +1,6 @@
 package by.itacademy.project.chumakou.taf.sledopitby.ui.tests;
 
-import by.itacademy.project.chumakou.taf.sledopitby.ui.users.TestData;
+import by.itacademy.project.chumakou.taf.sledopitby.ui.data.TestData;
 import org.junit.jupiter.api.*;
 
 public class SearchTest extends BaseTest {
