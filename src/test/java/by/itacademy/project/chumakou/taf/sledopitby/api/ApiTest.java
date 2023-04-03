@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import static io.restassured.RestAssured.*;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.xml.XmlPath.CompatibilityMode.HTML;
