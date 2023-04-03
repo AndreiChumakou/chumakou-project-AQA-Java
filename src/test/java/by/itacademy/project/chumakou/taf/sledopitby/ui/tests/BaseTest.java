@@ -7,7 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 
-public class BaseTest {
+public class BaseTest{
 
     public WebDriver driver = Driver.getDriver();
     public HomePage homePage = new HomePage(driver);
@@ -20,6 +20,6 @@ public class BaseTest {
 
     @AfterEach
     public void tearDown(){
-        driver.quit();
+        Driver.close();
     }
 }

@@ -1,38 +1,43 @@
 package by.itacademy.project.chumakou.taf.sledopitby.api;
 
+import by.itacademy.project.chumakou.taf.sledopitby.ui.data.UserData;
 import by.itacademy.project.chumakou.taf.sledopitby.ui.pages.HomePage;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.xml.XmlPath;
 import io.restassured.response.Response;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static io.restassured.RestAssured.when;
+import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.given;
 import static io.restassured.path.xml.XmlPath.CompatibilityMode.HTML;
 
 public class ApiTest {
 
+    @BeforeEach
+    public void warmUp() {
+        baseURI = HomePage.URL;
+    }
+
     @Test
+    @DisplayName("Open Home page")
     public void testOpenHomePage() {
-        String URL = "https://www.sledopit.by";
-        RestAssured
-                .given()
+        given()
                 .when()
-                .get(URL)
+                .get()
                 .then()
-                .log().all()
                 .statusCode(200);
     }
 
     @Test
+    @DisplayName("Title of homepage")
     public void testGetTitleHomePage() {
-        String URL = "https://www.sledopit.by";
-        Response response = RestAssured
-                .given()
+        Response response = given()
                 .when()
-                .get(URL)
+                .get()
                 .then()
                 .assertThat()
                 .contentType(ContentType.HTML)
@@ -41,8 +46,18 @@ public class ApiTest {
         XmlPath htmlPath = new XmlPath(HTML, response.getBody().asString());
         Assertions.assertTrue(htmlPath.getString("html.head.title").equals(HomePage.TITLE_MAIN_PAGE));
     }
-}
 
-//        Response response1 = when().get(URL).then().extract().response();
-//        String bodyTxt = response1.htmlPath().getString("body");
-//        System.out.println(bodyTxt);
+    @Test
+    @DisplayName("Login with correct credentials")
+    public void loginAPI() {
+        RestAssured
+                .given()
+                .contentType("multipart/form-data")
+                .multiPart("email", UserData.EMAIL_VALID)
+                .multiPart("password", UserData.PASSWORD_VALID)
+                .when()
+                .post("/login")
+                .then()
+                .statusCode(302);
+    }
+}
