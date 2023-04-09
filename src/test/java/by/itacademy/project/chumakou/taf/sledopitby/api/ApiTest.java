@@ -22,7 +22,7 @@ public class ApiTest {
     }
 
     @Test
-    @DisplayName("Open Home page")
+    @DisplayName("S5. Open Home page")
     public void testOpenHomePage() {
         given()
                 .when()
@@ -32,7 +32,7 @@ public class ApiTest {
     }
 
     @Test
-    @DisplayName("Title of homepage")
+    @DisplayName("E5. Title of homepage")
     public void testGetTitleHomePage() {
         Response response = given()
                 .when()
@@ -47,7 +47,7 @@ public class ApiTest {
     }
 
     @Test
-    @DisplayName("Login with correct credentials")
+    @DisplayName("S6. Login with correct credentials")
     public void loginAPI() {
         RestAssured
                 .given()
