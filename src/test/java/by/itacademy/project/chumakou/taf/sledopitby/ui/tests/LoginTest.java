@@ -11,7 +11,7 @@ public class LoginTest extends BaseTest{
     LoginSteps step = new LoginSteps(driver, homePage, loginPage);
 
     @Test
-    @DisplayName("Login. Valid credentials")
+    @DisplayName("S2. Login. Valid credentials")
     @Tag("smoke")
     public void testLoginWithCorrectCredentials() {
         AccountEditPage accountEditPage = new AccountEditPage(driver);
@@ -20,7 +20,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    @DisplayName("Login. Invalid email")
+    @DisplayName("E1. Login. Invalid email")
     public void testLoginWithIncorrectEmail() {
         step.login(UserData.EMAIL_INVALIDE, UserData.PASSWORD_VALID, false);
         Assertions.assertEquals(LoginPage.WARNING_INVALIDE_CREDENTIALS_TEXT,
@@ -28,7 +28,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    @DisplayName("Login. Invalid password")
+    @DisplayName("E2. Login. Invalid password")
     public void testLoginWithIncorrectPassword() {
         step.login(UserData.EMAIL_VALID, UserData.PASSWORD_INVALIDE, false);
         Assertions.assertEquals(LoginPage.WARNING_INVALIDE_CREDENTIALS_TEXT,
@@ -36,7 +36,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    @DisplayName("Login. Empty email")
+    @DisplayName("E3. Login. Empty email")
     public void testLoginWithEmptyEmail() {
         step.login("", UserData.PASSWORD_VALID, false);
         Assertions.assertEquals(LoginPage.WARNING_INVALIDE_CREDENTIALS_TEXT,
@@ -44,7 +44,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    @DisplayName("Login. Empty password")
+    @DisplayName("E4. Login. Empty password")
     public void testLoginWithEmptyPassword() {
         step.login(UserData.EMAIL_VALID, "", false);
         Assertions.assertEquals(LoginPage.WARNING_INVALIDE_CREDENTIALS_TEXT,
@@ -52,7 +52,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    @DisplayName("Logout")
+    @DisplayName("C1. Logout")
     public void exitFromAccount() {
         step.login(UserData.EMAIL_VALID, UserData.PASSWORD_VALID, true);
         Assertions.assertTrue(step.logout());

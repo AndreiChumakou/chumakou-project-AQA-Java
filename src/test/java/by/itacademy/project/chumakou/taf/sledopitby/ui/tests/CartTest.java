@@ -8,25 +8,25 @@ public class CartTest extends BaseTest{
     CartSteps step = new CartSteps(driver, homePage, loginPage);
 
     @Test
-    @DisplayName("Open site with empty cart")
+    @DisplayName("C2. Open site with empty cart")
     public void isCartEmptyWhenEnterFirstTime() {
         Assertions.assertTrue(homePage.isCartEmpty());
     }
 
     @Test
-    @DisplayName("Add product to cart")
+    @DisplayName("S4. Add product to cart")
     public void addProductToCart() {
         Assertions.assertTrue(step.addProductToCartCheck());
     }
 
     @Test
-    @DisplayName("Storing products in a cart")
+    @DisplayName("C3. Storing products in a cart")
     public void saveProductInCartWhenLogout() {
         Assertions.assertTrue(step.saveProductInCartWhenLogout());
     }
 
     @Test()
-    @DisplayName("Remove product from cart")
+    @DisplayName("C4. Remove product from cart")
     public void removeFromCart() {
         Assertions.assertTrue(step.addProductToCartAndRemove());
     }
